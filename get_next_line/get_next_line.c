@@ -6,7 +6,7 @@
 /*   By: qmoreau <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 14:03:27 by qmoreau           #+#    #+#             */
-/*   Updated: 2021/12/17 15:59:08 by qmoreau          ###   ########.fr       */
+/*   Updated: 2021/12/18 12:12:05 by qmoreau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,9 @@ char	*cut_beg(char *save)
 	char	*ret;
 
 	i = 0;
-	while (save[i] != '\n' && save[i])
+	if (!save[0])
+		return (NULL);
+	while (save[i] && save[i] != '\n')
 		i++;
 	ret = malloc(i + 2);
 	if (!ret)
@@ -33,13 +35,18 @@ char	*cut_beg(char *save)
 	return (ret);
 }
 
-char	*cut_end(char *save)
+char	*cut_end(char *save, int lu)
 {
 	int		i;
 	int		j;
 	char	*ret;
 
 	i = 0;
+	if (!save[0] || !lu)
+	{
+		free(save);
+		return (NULL);
+	}
 	while (save[i] != '\n' && save[i])
 		i++;
 	i++;
@@ -75,12 +82,15 @@ char	*get_next_line(int fd)
 	{
 		lu = read(fd, buffer, BUFFER_SIZE);
 		if (lu == -1)
+		{
+			free(buffer);
 			return (NULL);
+		}
 		buffer[lu] = 0;
 		save = my_strjoin(save, buffer);
 	}
 	free(buffer);
 	ret = cut_beg(save);
-	save = cut_end(save);
+	save = cut_end(save, lu);
 	return (ret);
 }

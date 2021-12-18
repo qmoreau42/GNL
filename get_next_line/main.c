@@ -6,7 +6,7 @@
 /*   By: qmoreau <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 14:13:43 by qmoreau           #+#    #+#             */
-/*   Updated: 2021/12/17 15:47:27 by qmoreau          ###   ########.fr       */
+/*   Updated: 2021/12/18 11:45:18 by qmoreau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ int	main(void)
 	char	*rec;
 
 	rec = NULL;
-	//fd = open("file.txt", O_RDONLY);
-	fd = 0;
+	fd = open("file.txt", O_RDONLY);
+	//fd = 0;
 	while ((rec = get_next_line(fd)))
 	{
 		printf("%s", rec);
