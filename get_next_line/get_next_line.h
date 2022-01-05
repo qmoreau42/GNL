@@ -6,7 +6,7 @@
 /*   By: qmoreau <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 13:59:22 by qmoreau           #+#    #+#             */
-/*   Updated: 2021/12/19 18:04:54 by qmoreau          ###   ########.fr       */
+/*   Updated: 2022/01/05 15:46:42 by qmoreau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-char			*my_realloc(char *ptr, unsigned int newSize);
-void			*my_memcpy(void *dest, void *src, unsigned int n);
 size_t			my_strlen(const char *a);
 int				my_is_in(char *s, char c);
 char			*my_strjoin(char *s1, char *s2);
