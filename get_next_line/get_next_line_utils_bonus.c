@@ -6,7 +6,7 @@
 /*   By: qmoreau <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 13:44:38 by qmoreau           #+#    #+#             */
-/*   Updated: 2021/12/19 18:08:31 by qmoreau          ###   ########.fr       */
+/*   Updated: 2022/01/14 12:19:13 by qmoreau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,23 @@ char	*my_strjoin(char *s1, char *s2)
 {
 	char	*ret;
 	size_t	i;
+	size_t	len_s1;
+	size_t	len_s2;
 
 	i = 0;
-	ret = malloc(sizeof(*ret) * (my_strlen(s1) + my_strlen(s2) + 1));
+	len_s1 = my_strlen(s1);
+	len_s2 = my_strlen(s2);
+	ret = malloc(sizeof(*ret) * (len_s1 + len_s2 + 1));
 	if (ret == NULL)
 		return (0);
-	while (i < my_strlen(s1))
+	while (i < len_s1)
 	{
 		ret[i] = s1[i];
 		i++;
 	}
-	while (i < (my_strlen(s1) + my_strlen(s2)))
+	while (i < (len_s1 + len_s2))
 	{
-		ret[i] = s2[i - my_strlen(s1)];
+		ret[i] = s2[i - len_s1];
 		i++;
 	}
 	ret[i] = '\0';

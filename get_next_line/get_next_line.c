@@ -6,7 +6,7 @@
 /*   By: qmoreau <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 14:03:27 by qmoreau           #+#    #+#             */
-/*   Updated: 2021/12/19 17:39:12 by qmoreau          ###   ########.fr       */
+/*   Updated: 2022/01/14 12:24:37 by qmoreau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	*cut_end(char *save, int lu)
 	char	*ret;
 
 	i = 0;
-	if (!save[0] || !lu)
+	if (!save[0] || lu == 0)
 	{
 		free(save);
 		return (NULL);
@@ -96,7 +96,7 @@ char	*get_next_line(int fd)
 	buffer = get_next_line_2(fd);
 	if (!buffer)
 		return (NULL);
-	while (my_is_in(save[fd], '\n') == 0 && lu != 0)
+	while (lu > 0 && my_is_in(save[fd], '\n') == 0)
 	{
 		lu = read(fd, buffer, BUFFER_SIZE);
 		if (lu == -1)
