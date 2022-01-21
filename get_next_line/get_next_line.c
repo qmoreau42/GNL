@@ -6,7 +6,7 @@
 /*   By: qmoreau <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 14:03:27 by qmoreau           #+#    #+#             */
-/*   Updated: 2022/01/14 12:24:37 by qmoreau          ###   ########.fr       */
+/*   Updated: 2022/01/21 15:55:58 by qmoreau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,14 @@ char	*cut_beg(char *save)
 		return (NULL);
 	while (save[i] && save[i] != '\n')
 		i++;
-	ret = malloc(i + 2);
+	if (save[i] == '\n')
+		ret = malloc(i + 2);
+	else
+		ret = malloc(i + 1);
 	if (!ret)
 		return (NULL);
-	ret[i + 1] = '\0';
+	if (save[i] == '\n')
+		ret[i + 1] = '\0';
 	while (i >= 0)
 	{
 		ret[i] = save[i];
