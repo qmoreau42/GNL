@@ -6,7 +6,7 @@
 /*   By: qmoreau <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 13:44:38 by qmoreau           #+#    #+#             */
-/*   Updated: 2022/01/14 12:19:13 by qmoreau          ###   ########.fr       */
+/*   Updated: 2022/03/03 17:25:39 by qmoreau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,24 @@ size_t	my_strlen(const char *a)
 	while (a && a[i] != 0)
 		i++;
 	return (i);
+}
+
+char	*ft_strdup(char *str)
+{
+	char *ret;
+	int		i;
+
+	if (str == NULL)
+		return (ft_strdup(""));
+	i = 0;
+	ret = malloc(my_strlen(str) + 1);
+	if (!ret)
+		return (NULL);
+	while (str[i])
+	{
+		ret[i] = str[i];
+		i++;
+	}
+	ret[i] = '\0';
+	return (ret);
 }

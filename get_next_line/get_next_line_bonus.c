@@ -6,11 +6,12 @@
 /*   By: qmoreau <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 14:03:27 by qmoreau           #+#    #+#             */
-/*   Updated: 2022/01/14 12:28:28 by qmoreau          ###   ########.fr       */
+/*   Updated: 2022/03/04 13:38:50 by qmoreau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
+#include<stdio.h>
 
 char	*cut_beg(char *save)
 {
@@ -19,7 +20,10 @@ char	*cut_beg(char *save)
 
 	i = 0;
 	if (!save[0])
+	{
+		free(save);
 		return (NULL);
+	}
 	while (save[i] && save[i] != '\n')
 		i++;
 	ret = malloc(i + 2);
@@ -31,6 +35,7 @@ char	*cut_beg(char *save)
 		ret[i] = save[i];
 		i--;
 	}
+	free(save);
 	return (ret);
 }
 
@@ -39,7 +44,7 @@ int	cut_end_2(char *save, char *ret, int i)
 	int	j;
 
 	j = 0;
-	while (save[i])
+	while (save[i - 1])
 	{
 		ret[j] = save[i];
 		i++;
@@ -48,66 +53,68 @@ int	cut_end_2(char *save, char *ret, int i)
 	return (j);
 }
 
-char	*cut_end(char *save, int lu)
+int	cut_end(char *temp, int lu, char *save)
 {
 	int		i;
 	int		j;
-	char	*ret;
 
 	i = 0;
-	if (!save[0] || !lu)
+	(void)lu;
+	if (!temp[0])
 	{
-		free(save);
-		return (NULL);
+		free(temp);
+		return (0);
 	}
-	while (save[i] != '\n' && save[i])
+	while (temp[i] != '\n' && temp[i])
 		i++;
 	i++;
-	ret = malloc(my_strlen(save) - i + 1);
-	if (!ret)
-		return (NULL);
-	j = cut_end_2(save, ret, i);
-	ret[j] = 0;
-	free(save);
-	return (ret);
+	j = cut_end_2(temp, save, i);
+	save[j] = 0;
+	if (lu == 0)
+		save[0] = 0;
+	return (1);
 }
 
-char	*get_next_line_2(int fd)
+char	*get_next_line2(int fd, int lu, char *buffer)
 {
-	char	*ret;
-
-	if (fd < 0 || BUFFER_SIZE <= 0)
-		return (NULL);
-	ret = malloc(BUFFER_SIZE + 1);
-	if (!ret)
-		return (NULL);
-	return (ret);
-}
-
-char	*get_next_line(int fd)
-{
-	char		*buffer;
-	static char	*save[OPEN_MAX];
 	char		*ret;
-	int			lu;
+	static char save[OPEN_MAX][BUFFER_SIZE + 1];
 
-	lu = 1;
-	buffer = get_next_line_2(fd);
-	if (!buffer)
-		return (NULL);
-	while (my_is_in(save[fd], '\n') == 0 && lu != 0)
+	ret = ft_strdup(save[fd]);
+	while (my_is_in(ret, '\n') == 0 && lu != 0)
 	{
 		lu = read(fd, buffer, BUFFER_SIZE);
 		if (lu == -1)
 		{
 			free(buffer);
+			free(ret);
 			return (NULL);
 		}
 		buffer[lu] = 0;
-		save[fd] = my_strjoin(save[fd], buffer);
+		ret = my_strjoin(ret, buffer);
 	}
 	free(buffer);
-	ret = cut_beg(save[fd]);
-	save[fd] = cut_end(save[fd], lu);
+	if (!cut_end(ret, lu, save[fd]))
+		return (NULL);
+	ret = cut_beg(ret);
+	return (ret);
+}
+
+char	*get_next_line(int fd)
+{
+	char	*ret;
+	char	*buffer;
+
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
+	buffer = malloc(BUFFER_SIZE + 1);
+	if (!buffer)
+		return (NULL);
+	ret = get_next_line2(fd, 1, buffer);
+	if (ret && my_strlen(ret) == 0)
+	{
+		free(ret);
+		return (NULL);
+	}
 	return (ret);
 }
