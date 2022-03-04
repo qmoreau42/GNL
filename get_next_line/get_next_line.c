@@ -6,7 +6,7 @@
 /*   By: qmoreau <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 14:03:27 by qmoreau           #+#    #+#             */
-/*   Updated: 2022/03/04 13:48:22 by qmoreau          ###   ########.fr       */
+/*   Updated: 2022/03/04 14:05:11 by qmoreau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	cut_end(char *temp, int lu, char *save)
 char	*get_next_line2(int fd, int lu, char *buffer)
 {
 	char		*ret;
-	static char save[BUFFER_SIZE + 1];
+	static char	save[BUFFER_SIZE + 1];
 
 	ret = ft_strdup(save);
 	while (my_is_in(ret, '\n') == 0 && lu != 0)

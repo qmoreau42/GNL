@@ -6,7 +6,7 @@
 /*   By: qmoreau <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 13:44:38 by qmoreau           #+#    #+#             */
-/*   Updated: 2022/03/03 17:25:39 by qmoreau          ###   ########.fr       */
+/*   Updated: 2022/03/04 14:04:19 by qmoreau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ size_t	my_strlen(const char *a)
 
 char	*ft_strdup(char *str)
 {
-	char *ret;
+	char	*ret;
 	int		i;
 
 	if (str == NULL)
